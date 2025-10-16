@@ -1,0 +1,40 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+@theme {
+  --color-primary: #5f6FFF;
+}
+
+*{
+  font-family: 'Outfit';
+}
+
+.hover-primary:hover {
+  background-color: #5f6FFF !important;
+  color: white !important;
+}
+
+@layer utilities {
+  .grid-cols-auto{
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));  
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+.active hr{
+    @apply block
+}
+::-webkit-scrollbar{
+  display: none;
+}
+
+@media (max-width: 740px) {
+  .active p{
+    @apply text-white bg-primary
+  }
+}
