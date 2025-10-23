@@ -8,7 +8,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [showMenu, setShowmenu] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
- const{token,setToken} = useContext(AppContext)
+ const{token,setToken,userData} = useContext(AppContext)
  
 
 const logout = ()=>{
@@ -40,9 +40,9 @@ const logout = ()=>{
         </NavLink>
       </ul>
       <div className="flex items-center gap-4 cursor-pointer">
-        {token ? (
+        {token &&userData ?(
           <div onClick={() => setShowProfileMenu(!showProfileMenu)} className="flex items-center gap-2 cursor-pointer relative">
-            <img className="w-8 rounded-full " src={assets.profile_pic} alt="" />
+            <img className="w-8 rounded-full " src={userData.image} alt="" />
             <img className="w-2.5 " src={assets.dropdown_icon} alt="" />
             <div className="absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20">
               <div className={`min-w-48 bg-stone-100 rounded flex flex-col gap-4 p-4 shadow-lg transition-all duration-200 ${showProfileMenu ? 'block' : 'hidden'}`}>

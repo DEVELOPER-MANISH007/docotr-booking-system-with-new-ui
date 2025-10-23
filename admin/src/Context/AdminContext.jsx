@@ -10,6 +10,8 @@ const [aToken,setAToken] = useState(localStorage.getItem('aToken')?localStorage.
 const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000'
 
 const [doctors,setDoctors] =useState([])
+const [appointments,setAppointments] = useState([])
+const [dashData,setDashData] = useState([])
 
 
 
@@ -46,6 +48,47 @@ const changeAvailability  = async(docId)=>{
   }
 } 
 
+const getAllAppointments =  async()=>{
+  try {
+    const {data} = await axios.post(backendUrl+'/api/admin/appointments',{},{headers:{'Authorization':`Bearer ${aToken}`}}) 
+    if(data.success){
+      setAppointments(data.appointments)
+      console.log(data.appointments)
+    }else{
+      toast.error(data.message)
+    }
+  } catch (error) {
+    toast.error(error.message)
+    
+  }
+}
+
+const cancelAppointment = async(appointmentId)=>{
+  try {
+    const {data} = await axios.post(backendUrl+'/api/admin/cancel-appointment',{appointmentId},{headers:{'Authorization':`Bearer ${aToken}`}})
+    if(data.success){
+      toast.success(data.message)
+      getAllAppointments()
+    }else{
+      toast.error(data.message)
+    }
+  } catch (error) {
+    toast.error(error.message)
+  }
+}
+const getDashData = async()=>{
+try {
+  const {data} = await axios.get(backendUrl+'/api/admin/dashboard',{headers:{'Authorization':`Bearer ${aToken}`}})
+  if(data.success){
+    setDashData(data.dashData)
+    console.log(data.dashData)
+  }else{
+    toast.error(data.message)
+  }
+} catch (error) {
+  toast.error(error.message)
+}
+}
 
   const value = {
     aToken,
@@ -54,7 +97,16 @@ const changeAvailability  = async(docId)=>{
     getallDoctors,
     doctors,
     changeAvailability,
+    getAllAppointments,
+    setAppointments,
+    appointments,
+    cancelAppointment,
+    getDashData,
+    setDashData,
+    dashData
   };
+
+
   return (
     <AdminContext.Provider value={value}>{props.children}</AdminContext.Provider>
   );

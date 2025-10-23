@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../Context/AppContext";
 import { assets } from "../assets/assets";
 import RealtedDocters from "../components/RealtedDocters";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const Appointments = () => {
   const { docId } = useParams();
-  const { doctors, currencySymbol } = useContext(AppContext);
+  const { doctors, currencySymbol,backendUrl,getDoctorsData,token } = useContext(AppContext);
   const daysOfWeek = ['SUN','MON','TUE','WED','THU','FRI','SAT']
 
   const dateScrollRef = useRef(null);
@@ -16,6 +18,9 @@ const Appointments = () => {
   const [docSlots, setDocSlots] = useState([]);
   const [slotIndex, setSlotIndex] = useState(0);
   const [slotTime, setSlotTime] = useState("");
+
+
+  const navigate = useNavigate()
 
   // Custom smooth scroll handler with momentum
   const handleWheel = (container) => (e) => {
@@ -50,6 +55,7 @@ const Appointments = () => {
   };
 
   const getAvailableSlots = () => {
+    if (!docInfo) return;
     setDocSlots([]);
     const today = new Date();
 
@@ -79,15 +85,64 @@ const Appointments = () => {
           hour12: true
         });
 
-        timeSlots.push({
-          datetime: new Date(currentDate),
-          time: formattedTime,
-        });
+        let day = currentDate.getDate()
+        let month = currentDate.getMonth()+1
+        let year = currentDate.getFullYear()
 
+        const slotsDate = `${day}_${month}_${year}`
+        const slotsTime = formattedTime
+
+        const booked = (docInfo && docInfo.slots_booked) ? docInfo.slots_booked : {}
+        const isSlotAvailable = booked[slotsDate] && booked[slotsDate].includes(slotsTime) ? false : true
+        
+        if(isSlotAvailable){
+
+          timeSlots.push({
+            datetime: new Date(currentDate),
+            time: formattedTime,
+          });
+  
+        }
+        //add slot to array
+       
         currentDate.setMinutes(currentDate.getMinutes() + 30);
       }
 
-      setDocSlots((prev) => [...prev, timeSlots]);
+      // Only add days that have at least one available slot
+      if (timeSlots.length > 0) {
+        setDocSlots((prev) => [...prev, timeSlots]);
+      }
+    }
+  };
+
+
+  const bookAppointment = async()=>{
+    if(!token){
+      toast.warn("Login to book appointment")
+      return navigate('/')
+    }
+    try {
+      const selectedDate = docSlots[slotIndex][0].datetime
+      let day = selectedDate.getDate()
+      let month = selectedDate.getMonth()+1
+      let year = selectedDate.getFullYear()
+
+      const slotDate = `${day}_${month}_${year}`
+      const { data } = await axios.post(
+        backendUrl + '/api/user/bookAppointment',
+        { docId, slotDate, slotTime },
+        { headers: { 'Authorization': `Bearer ${token}` } }
+      )
+      if(data.success){
+        toast.success(data.message)
+        getDoctorsData()
+        navigate('/my-appointments')
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error(error.message)
     }
   };
 
@@ -182,7 +237,7 @@ const Appointments = () => {
         {/* ------------------booking slots--------------------------------- */}
         <div className="sm:ml-72 sm:pl-4 font-medium text-gray-700">
           <p>Booking Slots</p>
-          <div ref={dateScrollRef} className="flex gap-3  items-center w--full  overflow-x-scroll mt-4">
+          <div ref={dateScrollRef} className="flex gap-3 items-center w-full overflow-x-scroll mt-4">
             {docSlots.length && docSlots.map((item,index)=>(
               <div onClick={()=>setSlotIndex(index)} className={`text-center py-6 min-w-16 rounded-full cursor-pointer ${slotIndex===index?'bg-primary text-white':'border border-gray-300'} `} key={index}>
                 <p>{item[0]&&daysOfWeek[item[0].datetime.getDay()]}</p>
@@ -197,7 +252,7 @@ const Appointments = () => {
               </p>
             ))}
           </div>
-          <button className="bg-primary text-white text-sm font-light px-14 py-3 rounded-full my-6 ">Appointment a Book</button>
+          <button onClick={bookAppointment} className="bg-primary text-white text-sm font-light px-14 py-3 rounded-full my-6 ">Appointment a Book</button>
                 {/* --------------isting Related Doctors----------------------- */}
                 <RealtedDocters docId={docId} speciality={docInfo.speciality}/>
 
