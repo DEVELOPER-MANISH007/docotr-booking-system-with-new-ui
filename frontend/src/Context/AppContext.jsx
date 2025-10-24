@@ -64,6 +64,14 @@ const AppContextProvider = (props) => {
     getDoctorsData();
   }, []);
 
+  // Refresh doctors list every 30 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      getDoctorsData();
+    }, 30000); // 30 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
 useEffect(()=>{
   if(token){

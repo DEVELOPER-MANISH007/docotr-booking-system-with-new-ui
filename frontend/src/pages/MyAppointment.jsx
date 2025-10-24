@@ -116,9 +116,10 @@ useEffect(()=>{
           </div>
           <div></div>
           <div className='flex flex-col justify-end gap-5'>
-          {!item.cancelled && !item.payment && <button onClick={()=>appointmentRazorpay(item._id)}  className=' px-2 rounded-lg text-sm text-stone-500 text-center sm:min-w-48 py-2 border hover:bg-primary hover:text-white transition-all duration-300 ' >Pay Online</button>}
+          {!item.cancelled && !item.payment && !item.isCompleted && <button onClick={()=>appointmentRazorpay(item._id)}  className=' px-2 rounded-lg text-sm text-stone-500 text-center sm:min-w-48 py-2 border hover:bg-primary hover:text-white transition-all duration-300 ' >Pay Online</button>}
           {!item.cancelled && item.payment && <button className=' px-2 rounded-lg text-sm text-green-500 text-center sm:min-w-48 py-2 border border-green-500 cursor-default' >Paid</button>}
-          {!item.cancelled &&  <button onClick={()=>cancelAppointment(item._id)} className=' px-2 rounded-lg text-sm text-stone-500 text-center sm:min-w-48 py-2 border hover:bg-red-600 hover:text-white transition-all duration-300 ' >Cancel Appointment</button>}
+          {!item.cancelled && item.isCompleted && !item.payment && <button className=' px-2 rounded-lg text-sm text-blue-500 text-center sm:min-w-48 py-2 border border-blue-500 cursor-default' >Completed</button>}
+          {!item.cancelled && !item.isCompleted && <button onClick={()=>cancelAppointment(item._id)} className=' px-2 rounded-lg text-sm text-stone-500 text-center sm:min-w-48 py-2 border hover:bg-red-600 hover:text-white transition-all duration-300 ' >Cancel Appointment</button>}
           {item.cancelled && <button  className=' px-2 rounded-lg text-sm text-red-500 text-center sm:min-w-48 py-2 border border-red-500 cursor-default' >Appointment Cancelled</button>}
           </div>
         </div>
