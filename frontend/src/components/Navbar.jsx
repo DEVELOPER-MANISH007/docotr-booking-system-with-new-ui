@@ -312,7 +312,7 @@ const Navbar = () => {
               
               {/* Admin Login - Mobile */}
               <a
-                href="http://localhost:https://docotr-booking-system-with-new-ui-5.vercel.app/"
+                href="https://docotr-booking-system-with-new-ui-5.vercel.app"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setShowmenu(false)}

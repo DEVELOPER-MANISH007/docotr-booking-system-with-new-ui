@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 export const DoctorContext = createContext();
 
 const DoctorContextProvider = (props) => {
- const backendUrl = import.meta.env.VITE_BACKEND_URL || 'https://docotr-booking-system-with-new-ui.vercel.app/'
+ const backendUrl = import.meta.env.VITE_BACKEND_URL || 'https://docotr-booking-system-with-new-ui.vercel.app'
   const [dToken, setDToken] = useState(
     localStorage.getItem("dToken") ? localStorage.getItem("dToken") : ""
   );
