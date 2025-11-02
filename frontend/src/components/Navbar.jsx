@@ -86,7 +86,7 @@ const Navbar = () => {
             
             {/* Admin Login Button */}
             <a
-              href="https://docotr-booking-system-with-new-ui-5.vercel.app"
+              href="https://docotr-booking-system-with-new-ui-5.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
               className="px-4 py-2 rounded-xl font-medium transition-all duration-300 bg-purple-600 hover:bg-purple-700 text-white shadow-md hover:shadow-lg flex items-center gap-2"
@@ -312,7 +312,7 @@ const Navbar = () => {
               
               {/* Admin Login - Mobile */}
               <a
-                href="https://docotr-booking-system-with-new-ui-5.vercel.app"
+                href="http://localhost:https://docotr-booking-system-with-new-ui-5.vercel.app/"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setShowmenu(false)}
