@@ -12,7 +12,7 @@ import Allapointments from "./Pages/Admin/Allapointments";
 import DoctorsList from "./Pages/Admin/DoctorsList";
 import { DoctorContext } from "./Context/DoctorContext";
 import DoctorProfile from "./Pages/Doctor/DoctorProfile";
-import DoctorAppointments from "./Pages/Doctor/doctorAppointments";
+import DoctorAppointments from "./Pages/Doctor/DoctorAppointments";
 import DoctorDashboard from "./Pages/Doctor/DoctorDashboard";
 
 const App = () => {
