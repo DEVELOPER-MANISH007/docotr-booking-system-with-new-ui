@@ -1,283 +1,186 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
 
 @variant dark (&:where(.dark, .dark *));
 
+/* ---------------------------------------------------
+   Design tokens — Prescripto premium healthcare system
+--------------------------------------------------- */
 @theme {
-  --color-primary: #5f6FFF;
+  /* Core brand palette: deep navy + clinical teal */
+  --color-ink-950: #0a1628;
+  --color-ink-900: #0f1f38;
+  --color-ink-800: #16294a;
+  --color-ink-700: #1f3457;
+  --color-ink-600: #2c4569;
+
+  --color-brand-50:  #eef4ff;
+  --color-brand-100: #dbe7fe;
+  --color-brand-200: #bfd4fd;
+  --color-brand-300: #93b6fb;
+  --color-brand-400: #5f8ff6;
+  --color-brand-500: #3968ec;
+  --color-brand-600: #2748d8;
+  --color-brand-700: #2138b0;
+  --color-brand-800: #1f318b;
+  --color-brand-900: #1c2c6e;
+
+  --color-teal-50:  #eefbf8;
+  --color-teal-100: #d3f4ec;
+  --color-teal-200: #a6e8d9;
+  --color-teal-300: #6fd6c1;
+  --color-teal-400: #3fbda6;
+  --color-teal-500: #269e8b;
+  --color-teal-600: #1c7e71;
+  --color-teal-700: #19645c;
+
+  --color-slate-25: #f8fafc;
+  --color-slate-50: #f5f7fa;
+
+  --color-success-500: #16a34a;
+  --color-success-50: #ecfdf3;
+  --color-warning-500: #d97706;
+  --color-warning-50: #fffaeb;
+  --color-danger-500: #dc2626;
+  --color-danger-50: #fef2f2;
+
+  --color-primary: #2748d8;
+
+  --font-sans: 'Plus Jakarta Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-card: 0 1px 2px rgba(15, 31, 56, 0.04), 0 1px 3px rgba(15, 31, 56, 0.06);
+  --shadow-card-hover: 0 4px 10px rgba(15, 31, 56, 0.06), 0 2px 4px rgba(15, 31, 56, 0.05);
+  --shadow-panel: 0 8px 24px rgba(15, 31, 56, 0.08);
 }
 
-*{
-  font-family: 'Outfit';
+* {
+  font-family: var(--font-sans);
 }
 
-/* Dark Mode Base Styles */
 html, body {
   @apply transition-colors duration-300;
 }
 
-html.dark {
-  @apply bg-gray-900;
-}
+html.dark { @apply bg-ink-950; }
+html.dark body { @apply bg-ink-950 text-slate-100; }
+body { @apply bg-slate-25 text-ink-900; }
 
-html.dark body {
-  @apply bg-gray-900 text-gray-100;
-}
+::selection { background-color: var(--color-brand-200); color: var(--color-ink-900); }
 
-body {
-  @apply bg-white text-gray-900;
-}
+/* ---------------------------------------------------
+   Reusable component classes
+--------------------------------------------------- */
+@layer components {
+  /* Buttons */
+  .btn, .btn-primary, .btn-accent, .btn-secondary, .btn-outline, .btn-ghost, .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg font-semibold text-sm
+           px-5 py-2.5 transition-all duration-200 select-none
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-500
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none;
+  }
+  .btn-primary {
+    @apply bg-ink-900 text-white shadow-sm hover:bg-ink-800 active:bg-ink-950
+           dark:bg-brand-600 dark:hover:bg-brand-500;
+  }
+  .btn-accent {
+    @apply bg-brand-600 text-white shadow-sm hover:bg-brand-700 active:bg-brand-800;
+  }
+  .btn-secondary {
+    @apply bg-white text-ink-800 border border-slate-200 shadow-sm hover:bg-slate-50 hover:border-slate-300
+           dark:bg-ink-800 dark:text-slate-100 dark:border-ink-600 dark:hover:bg-ink-700;
+  }
+  .btn-outline {
+    @apply bg-transparent text-white border border-white/40 hover:bg-white/10;
+  }
+  .btn-ghost {
+    @apply bg-transparent text-ink-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-ink-800;
+  }
+  .btn-danger {
+    @apply bg-white text-danger-500 border border-danger-500/30 hover:bg-danger-50
+           dark:bg-transparent dark:hover:bg-danger-500/10;
+  }
+  .btn-sm { @apply text-xs px-3.5 py-2; }
+  .btn-lg { @apply text-base px-7 py-3.5; }
 
-.hover-primary:hover {
-  background-color: #5f6FFF !important;
-  color: white !important;
+  /* Surfaces */
+  .card {
+    @apply bg-white dark:bg-ink-800 border border-slate-200/80 dark:border-ink-600/60 rounded-2xl;
+    box-shadow: var(--shadow-card);
+  }
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-0.5;
+  }
+  .card-hover:hover { box-shadow: var(--shadow-card-hover); }
+
+  .panel {
+    @apply bg-white dark:bg-ink-800 border border-slate-200/80 dark:border-ink-600/60 rounded-2xl;
+    box-shadow: var(--shadow-panel);
+  }
+
+  .section-label {
+    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-brand-600 dark:text-brand-300;
+  }
+
+  /* Inputs */
+  .field-label {
+    @apply block text-sm font-medium text-ink-700 dark:text-slate-300 mb-1.5;
+  }
+  .input {
+    @apply w-full rounded-lg border border-slate-300 dark:border-ink-600 bg-white dark:bg-ink-900
+           px-3.5 py-2.5 text-sm text-ink-900 dark:text-slate-100 placeholder:text-slate-400
+           transition-all duration-150
+           focus:outline-none focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500;
+  }
+  .input-error { @apply border-danger-500 focus:ring-danger-500/20 focus:border-danger-500; }
+
+  /* Badges */
+  .badge, .badge-success, .badge-warning, .badge-danger, .badge-neutral, .badge-brand {
+    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold;
+  }
+  .badge-success { @apply bg-success-50 text-success-500 dark:bg-success-500/10; }
+  .badge-warning { @apply bg-warning-50 text-warning-500 dark:bg-warning-500/10; }
+  .badge-danger  { @apply bg-danger-50 text-danger-500 dark:bg-danger-500/10; }
+  .badge-neutral { @apply bg-slate-100 text-ink-600 dark:bg-ink-700 dark:text-slate-300; }
+  .badge-brand   { @apply bg-brand-50 text-brand-700 dark:bg-brand-500/10 dark:text-brand-300; }
+
+  .container-app { @apply max-w-[1280px] mx-auto; }
 }
 
 @layer utilities {
-  .grid-cols-auto{
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));  
+  .grid-cols-auto {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   }
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
 }
-.active hr{
-    @apply block
-}
-::-webkit-scrollbar{
-  display: none;
-}
+
+.active hr { @apply block; }
 
 @media (max-width: 740px) {
-  .active p{
-    @apply text-white bg-primary
-  }
+  .active p { @apply text-white bg-ink-900; }
 }
 
-/* Footer Animations */
-@keyframes pulse-slow {
-  0%, 100% {
-    opacity: 0.3;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.5;
-    transform: scale(1.1);
-  }
-}
-
+/* ---------------------------------------------------
+   Motion — kept subtle and purposeful
+--------------------------------------------------- */
 @keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-
-.animate-pulse-slow {
-  animation: pulse-slow 4s ease-in-out infinite;
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
-
-.animate-fade-in-up {
-  animation: fade-in-up 0.6s ease-out forwards;
-  opacity: 0;
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-
-.animation-delay-200 {
-  animation-delay: 0.2s;
-}
-
-.animation-delay-400 {
-  animation-delay: 0.4s;
-}
-
-.animation-delay-600 {
-  animation-delay: 0.6s;
-}
-
-.animation-delay-2000 {
-  animation-delay: 2s;
-}
-
-/* Navbar & Appointment Page Animations */
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-slideDown {
-  animation: slideDown 0.2s ease-out;
-}
-
-.animate-fadeIn {
-  animation: fadeIn 0.6s ease-out;
-}
-
-.animate-slideUp {
-  animation: slideUp 0.6s ease-out 0.2s both;
-}
-
-/* Additional Animations for Pages */
-@keyframes slideLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideRight {
-  from {
-    opacity: 0;
-    transform: translateX(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.animate-slideLeft {
-  animation: slideLeft 0.8s ease-out;
-}
-
-.animate-slideRight {
-  animation: slideRight 0.8s ease-out;
-}
-
-.animate-slideIn {
-  animation: slideIn 0.6s ease-out;
-}
-
-.animate-fadeUp {
-  animation: fadeUp 0.6s ease-out;
-}
-
-.animate-scaleIn {
-  animation: scaleIn 0.5s ease-out;
-  animation-fill-mode: both;
-}
-
-.delay-100 {
-  animation-delay: 100ms;
-}
-
-.delay-200 {
-  animation-delay: 200ms;
-}
-
-/* Header Specific Animations */
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-}
-
-@keyframes blob {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-  }
-  33% {
-    transform: translate(30px, -50px) scale(1.1);
-  }
-  66% {
-    transform: translate(-20px, 20px) scale(0.9);
-  }
-}
-
-.animate-slideIn {
-  animation: slideIn 0.8s ease-out;
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-.animate-blob {
-  animation: blob 7s infinite;
-}
+.animate-fade-in-up { animation: fade-in-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-fade-in { animation: fade-in 0.4s ease-out both; }
+.animate-slide-down { animation: slide-down 0.18s ease-out both; }
+.animation-delay-100 { animation-delay: 0.1s; }
+.animation-delay-200 { animation-delay: 0.2s; }
+.animation-delay-300 { animation-delay: 0.3s; }

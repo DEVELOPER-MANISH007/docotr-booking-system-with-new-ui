@@ -16,7 +16,7 @@ import { ToastContainer } from 'react-toastify'
 
 export const App = () => {
   return (
- <div className='mx-4 sm:mx-[10%] bg-white dark:bg-gray-900 min-h-screen transition-colors duration-300'>
+ <div className='mx-4 sm:mx-[10%] bg-slate-25 dark:bg-ink-950 min-h-screen transition-colors duration-300'>
   <ToastContainer/>
   <Navbar />
 

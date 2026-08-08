@@ -1,45 +1,41 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { AppContext } from '../Context/AppContext'
-import { useNavigate } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from "react";
+import { AppContext } from "../Context/AppContext";
+import DoctorCard from "./DoctorCard";
 
-const RealtedDocters = ({speciality,docId}) => {
+const RealtedDocters = ({ docId, speciality }) => {
+  const { doctors } = useContext(AppContext);
+  const [relDocs, setRelDocs] = useState([]);
 
-const {doctors} =useContext(AppContext)
-const [relDoc,setRelDoc] = useState([])
-const navigate = useNavigate()
+  useEffect(() => {
+    if (doctors.length > 0 && speciality) {
+      const doctorsData = doctors.filter(
+        (doc) => doc.speciality === speciality && doc._id !== docId
+      );
+      setRelDocs(doctorsData);
+    }
+  }, [doctors, speciality, docId]);
 
-useEffect(()=>{
-if(doctors.length>0 && speciality){
-    const doctorsData = doctors.filter((doc)=>doc.speciality===speciality && doc._id!==docId)
-    setRelDoc(doctorsData   )
-
-}
-},[doctors,speciality,docId])
+  if (relDocs.length === 0) return null;
 
   return (
-    <div className='flex flex-col items-start gap-4 my-16 text-gray-900 md:mx-10'>
-     <h1 className='text-3xl font-medium'>Related Doctors</h1>
-     <p className='text-sm'>Simply browse through our extensive list of trusted doctors.</p>
-     <div className='w-full grid grid-cols-auto gap-4 py-6 px-3 sm:px-0  '>
-        {relDoc.slice(0,5).map((item, index) => (
-          <div onClick={()=>{navigate(`/appointment/${item._id}`);scrollTo(0,0)}} className='border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500' key={index}>
-            <img className='bg-blue-50 w-full object-cover aspect-square' src={item.image} alt={item.name} />
-            <div className='p-4'>
-             <div className={`flex items-center gap-2 text-sm text-center ${item.available?'text-green-500':'text-red-500'}`}>
-                 <p className={`w-2 h-2 rounded-full ${item.available?'bg-green-500':'bg-red-500 text-red-500 '}`}></p>
-              <p>{item.available?'Available':'Not Available'} </p>
-             </div>
-              
-                <p className='text-gray-900 text-lg font-medium'>{item.name}</p>
-                <p className='text-gray-600 text-sm'>{item.speciality}</p>
-            
-            </div>
-          </div>
-        ))}
-     </div>
-     <button onClick={()=>{navigate('/doctors');scrollTo(0,0)}} className='bg-blue-50 text-gray-600 px-12 py-3 rounded-full mt-4 hover:bg-blue-100 transition-all'>more</button>
-    </div>
-  )
-}
+    <section className="py-16 md:py-20">
+      <div className="text-center mb-10 max-w-xl mx-auto">
+        <span className="section-label mb-2">Related</span>
+        <h2 className="text-3xl md:text-[2.25rem] font-extrabold text-ink-900 dark:text-white tracking-tight mb-2">
+          More {speciality}s
+        </h2>
+        <p className="text-ink-500 dark:text-slate-400 text-sm md:text-base">
+          Other trusted specialists you may also want to consider.
+        </p>
+      </div>
 
-export default RealtedDocters
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-5">
+        {relDocs.slice(0, 5).map((item, index) => (
+          <DoctorCard doctor={item} index={index} key={item._id} />
+        ))}
+      </div>
+    </section>
+  );
+};
+
+export default RealtedDocters;

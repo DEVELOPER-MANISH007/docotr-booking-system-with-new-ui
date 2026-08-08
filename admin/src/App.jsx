@@ -20,11 +20,12 @@ const App = () => {
   const {dToken} = useContext(DoctorContext)
 
   return aToken || dToken ?(
-    <div className="bg-[#F8F9FD]">
+    <div className="min-h-screen bg-slate-25">
     <ToastContainer />
     <Navbar />
   <div className="flex items-start">
   <SideBar/> 
+  <main className="flex-1 min-w-0 px-4 sm:px-8 py-8">
   <Routes>
     {/* admin Routes */}
     <Route path="/" element={<></>} />
@@ -38,6 +39,7 @@ const App = () => {
     <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
 
   </Routes>
+  </main>
   </div>
     </div>
   ):(

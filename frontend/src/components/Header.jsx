@@ -3,91 +3,81 @@ import { assets } from "../assets/assets";
 
 const Header = () => {
   return (
-    <div className="relative flex flex-col md:flex-row flex-wrap bg-gradient-to-br from-blue-600 via-purple-600 to-pink-500 dark:from-blue-800 dark:via-purple-800 dark:to-pink-700 rounded-3xl px-6 md:px-10 lg:px-16 overflow-hidden shadow-2xl transition-colors duration-300">
-      {/* Animated Background Elements */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl animate-blob"></div>
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl animate-blob animation-delay-2000"></div>
+    <section className="relative overflow-hidden bg-ink-950 rounded-2xl mt-4">
+      {/* Subtle background texture */}
+      <div
+        className="absolute inset-0 opacity-[0.07]"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
+          backgroundSize: "28px 28px",
+        }}
+      />
+      <div className="absolute -top-24 -right-24 w-96 h-96 bg-brand-600/20 rounded-full blur-3xl" />
+      <div className="absolute -bottom-24 -left-16 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl" />
 
-      {/* Left Side */}
-      <div className="relative z-10 md:w-1/2 flex flex-col items-start justify-center gap-6 py-12 md:py-20 lg:py-24 animate-slideIn">
-        <div className="inline-block">
-          <span className="px-4 py-2 bg-white/20 backdrop-blur-sm text-white text-sm font-semibold rounded-full border border-white/30">
-            ✨ Your Health, Our Priority
+      <div className="relative flex flex-col-reverse md:flex-row items-center gap-10 md:gap-6 px-6 sm:px-10 lg:px-16 py-14 md:py-20">
+        {/* Left */}
+        <div className="flex-1 flex flex-col items-start gap-6 max-w-xl">
+          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-white/90 text-xs font-semibold tracking-wide uppercase">
+            Trusted healthcare, made simple
           </span>
+
+          <h1 className="text-4xl md:text-5xl font-extrabold leading-[1.1] text-white tracking-tight">
+            Find the right doctor.
+            <br />
+            Book with confidence.
+          </h1>
+
+          <p className="text-slate-300 text-base md:text-lg leading-relaxed">
+            Prescripto connects you with verified, experienced doctors across every
+            speciality — so you can schedule the right appointment in minutes, not days.
+          </p>
+
+          <div className="flex flex-wrap items-center gap-3 pt-1">
+            <a href="#speciality" className="btn-accent btn-lg">
+              Find a Doctor
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </a>
+            <a href="#doctors" className="btn-outline btn-lg text-white">
+              Learn More
+            </a>
+          </div>
+
+          {/* Trust indicators */}
+          <div className="flex flex-wrap items-center gap-6 pt-6 mt-2 border-t border-white/10 w-full">
+            <div className="flex items-center gap-2.5">
+              <img className="w-9 drop-shadow" src={assets.group_profiles} alt="" />
+              <div className="text-white/80 text-xs leading-snug">
+                Trusted by
+                <br />
+                <span className="text-white font-semibold text-sm">10,000+ patients</span>
+              </div>
+            </div>
+            <div className="h-8 w-px bg-white/10" />
+            <div className="text-white/80 text-xs leading-snug">
+              <span className="text-white font-semibold text-sm">100+</span> verified doctors
+            </div>
+            <div className="h-8 w-px bg-white/10 hidden sm:block" />
+            <div className="text-white/80 text-xs leading-snug hidden sm:block">
+              <span className="text-white font-semibold text-sm">4.8 / 5</span> average rating
+            </div>
+          </div>
         </div>
 
-        <h1 className="text-4xl md:text-5xl lg:text-6xl text-white font-bold leading-tight">
-          Book Appointments
-          <br />
-          <span className="text-yellow-300">with Trusted Doctors</span>
-        </h1>
-
-        <div className="flex flex-col md:flex-row items-start md:items-center gap-4 text-white">
-          <div className="flex -space-x-3">
-            <img className="w-32 drop-shadow-xl" src={assets.group_profiles} alt="" />
-          </div>
-          <div className="backdrop-blur-sm bg-white/10 p-4 rounded-xl border border-white/20">
-            <p className="text-white/90 text-sm md:text-base">
-              Browse through our extensive list of{" "}
-              <span className="font-semibold text-yellow-300">trusted doctors</span>
-              <br className="hidden md:block" />
-              and schedule your appointment hassle-free!
-            </p>
-          </div>
-        </div>
-
-        <div className="flex flex-wrap gap-4 mt-4">
-          <a
-            className="group flex items-center gap-3 bg-white hover:bg-yellow-300 rounded-full px-8 py-4 text-gray-700 font-semibold text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
-            href="#speciality"
-          >
-            Book Appointment
-            <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-            </svg>
-          </a>
-
-          <a
-            className="group flex items-center gap-3 backdrop-blur-sm bg-white/20 hover:bg-white/30 border-2 border-white rounded-full px-8 py-4 text-white font-semibold text-lg shadow-xl transform hover:scale-105 transition-all duration-300"
-            href="#doctors"
-          >
-            View Doctors
-          </a>
-        </div>
-
-        {/* Stats */}
-        <div className="flex flex-wrap gap-6 mt-6">
-          <div className="flex items-center gap-3 backdrop-blur-sm bg-white/10 px-6 py-3 rounded-full border border-white/20">
-            <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold">✓</span>
-            </div>
-            <div>
-              <p className="text-2xl font-bold text-white">100+</p>
-              <p className="text-white/80 text-xs">Verified Doctors</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3 backdrop-blur-sm bg-white/10 px-6 py-3 rounded-full border border-white/20">
-            <div className="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold">★</span>
-            </div>
-            <div>
-              <p className="text-2xl font-bold text-white">4.8</p>
-              <p className="text-white/80 text-xs">Average Rating</p>
-            </div>
-          </div>
+        {/* Right */}
+        <div className="relative flex-shrink-0 w-64 sm:w-80 md:w-[380px]">
+          <div className="absolute inset-4 bg-teal-400/10 rounded-3xl blur-2xl" />
+          <img
+            className="relative w-full rounded-2xl"
+            src={assets.header_img}
+            alt="Doctor ready to help"
+          />
         </div>
       </div>
-
-      {/* Right Side */}
-      <div className="relative z-10 md:w-1/2 flex items-end justify-center md:justify-end animate-float">
-        <img
-          className="w-full max-w-lg md:absolute bottom-0 right-0 drop-shadow-2xl"
-          src={assets.header_img}
-          alt="Doctor"
-        />
-      </div>
-    </div>
+    </section>
   );
 };
 

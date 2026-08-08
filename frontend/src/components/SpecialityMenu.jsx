@@ -1,79 +1,39 @@
-import React from 'react'
-import { specialityData } from '../assets/assets'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { specialityData } from "../assets/assets";
+import { Link } from "react-router-dom";
 
 const SpecialityMenu = () => {
   return (
-    <div id='speciality' className='flex flex-col items-center gap-6 py-20 text-gray-800 dark:text-gray-200 bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 transition-colors duration-300'>
-      {/* Header */}
-      <div className='text-center animate-fadeIn'>
-        <h1 className='text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-3'>
-          Find by <span className='text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600'>Speciality</span>
-        </h1>
-        <p className='sm:w-2/3 mx-auto text-gray-600 dark:text-gray-400 text-base'>
-          Choose from our wide range of medical specialities and connect with expert doctors
+    <section id="speciality" className="py-16 md:py-20">
+      <div className="text-center mb-10 max-w-xl mx-auto">
+        <span className="section-label mb-2">Specialities</span>
+        <h2 className="text-3xl md:text-[2.25rem] font-extrabold text-ink-900 dark:text-white tracking-tight mb-2">
+          Find by speciality
+        </h2>
+        <p className="text-ink-500 dark:text-slate-400 text-sm md:text-base">
+          Browse our network of specialists and book directly with the right expert.
         </p>
       </div>
 
-      {/* Speciality Cards */}
-      <div className='flex sm:justify-center gap-6 pt-8 w-full overflow-x-auto pb-4 px-4 scrollbar-hide'>
+      <div className="flex sm:justify-center gap-4 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide">
         {specialityData.map((item, index) => (
           <Link
             onClick={() => scrollTo(0, 0)}
-            className='group flex flex-col items-center text-sm cursor-pointer flex-shrink-0 animate-slideUp'
-            style={{ animationDelay: `${index * 100}ms` }}
+            className="group flex flex-col items-center gap-3 flex-shrink-0 w-24 sm:w-28"
             key={index}
             to={`/doctors/${encodeURIComponent(item.speciality)}`}
           >
-            <div className='relative'>
-              {/* Glow Effect */}
-              <div className='absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl blur opacity-0 group-hover:opacity-75 transition duration-500'></div>
-              
-              {/* Icon Container */}
-              <div className='relative w-20 h-20 sm:w-28 sm:h-28 bg-white dark:bg-gray-800 rounded-2xl shadow-lg flex items-center justify-center transform group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-300 border-2 border-gray-100 dark:border-gray-700 group-hover:border-blue-500'>
-                <img className='w-12 sm:w-16' src={item.image} alt={item.speciality} />
-              </div>
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white dark:bg-ink-800 border border-slate-200 dark:border-ink-600 flex items-center justify-center transition-all duration-200 group-hover:border-brand-400 group-hover:shadow-card-hover group-hover:-translate-y-1">
+              <img className="w-9 sm:w-11" src={item.image} alt={item.speciality} />
             </div>
-            
-            {/* Label */}
-            <p className='mt-3 font-semibold text-gray-700 dark:text-gray-300 group-hover:text-blue-600 transition-colors text-center max-w-[100px]'>
+            <p className="text-xs sm:text-sm font-medium text-ink-600 dark:text-slate-300 text-center group-hover:text-brand-600 dark:group-hover:text-brand-300 transition-colors">
               {item.speciality}
             </p>
           </Link>
         ))}
       </div>
+    </section>
+  );
+};
 
-      <style jsx>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(-20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideUp {
-          from { opacity: 0; transform: translateY(30px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate-fadeIn {
-          animation: fadeIn 0.6s ease-out;
-        }
-
-        .animate-slideUp {
-          animation: slideUp 0.6s ease-out;
-          animation-fill-mode: both;
-        }
-
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-
-        .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
-    </div>
-  )
-}
-
-export default SpecialityMenu
+export default SpecialityMenu;
