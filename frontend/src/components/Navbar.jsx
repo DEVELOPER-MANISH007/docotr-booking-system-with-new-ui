@@ -14,7 +14,7 @@ const navLinks = [
 // Points to the admin/doctor panel app (a separate Vite app in /admin).
 // Set VITE_ADMIN_URL in your .env once you deploy the redesigned admin app;
 // defaults to the local admin dev server (npm run dev inside /admin) for now.
-const adminPanelUrl = import.meta.env.VITE_ADMIN_URL || "http://https://docotr-booking-system-with-new-ui-5.vercel.app/:5174";
+const adminPanelUrl = import.meta.env.VITE_ADMIN_URL || "http://https://docotr-booking-system-with-new-ui-5.vercel.app";
 
 const Navbar = () => {
   const navigate = useNavigate();
